@@ -1,521 +1,308 @@
-# Jupyter to Overleaf to GitHub Workflow
+# Jupyter-Overleaf Workflow
 
-A seamless academic writing workflow that combines computational notebooks, collaborative LaTeX editing, and version control.
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
-## Overview
+Convert Jupyter notebooks to academic LaTeX papers with Overleaf and GitHub integration. Perfect for students and researchers.
 
-This workflow enables researchers to:
+## Quick Start
 
-1. **Develop** - Write code, run experiments, and analyze data in JupyterLab
-2. **Document** - Convert notebooks to academic LaTeX papers
-3. **Collaborate** - Sync to Overleaf for co-author editing
-4. **Archive** - Push final versions to GitHub with full reproducibility
+```bash
+# Install
+git clone https://github.com/Ziforge/jupyter-overleaf-workflow.git
+cd jupyter-overleaf-workflow
+pip install -e .
 
-## Workflow Architecture
-
+# Try the example
+jupyter notebook examples/simple_paper.ipynb
 ```
-┌─────────────────┐
-│  JupyterLab     │  1. Research & Development
-│  - Python code  │     - Data analysis
-│  - Equations    │     - Experiments
-│  - Figures      │     - Documentation
-└────────┬────────┘
-         │
-         │ 2. Convert
-         ▼
-┌─────────────────┐
-│  LaTeX + TikZ   │  3. Academic Format
-│  - Acta Acustica│     - 2-column layout
-│  - BibTeX refs  │     - Vector figures
-│  - Equations    │     - Citations
-└────────┬────────┘
-         │
-         │ 4. Sync
-         ▼
-┌─────────────────┐
-│  Overleaf       │  5. Collaboration
-│  - Live editing │     - Supervisor review
-│  - Comments     │     - Co-author input
-│  - Track changes│     - Final edits
-└────────┬────────┘
-         │
-         │ 6. Commit
-         ▼
-┌─────────────────┐
-│  GitHub         │  7. Version Control
-│  - Source code  │     - Full history
-│  - Data/results │     - Reproducibility
-│  - LaTeX source │     - DOI via Zenodo
-└─────────────────┘
+
+## Workflow Overview
+
+```mermaid
+flowchart TB
+    Start([Research Project]) --> Jupyter[📓 Jupyter Notebook]
+    Jupyter --> Convert{Convert to LaTeX}
+    Convert --> LaTeX[📄 LaTeX Document]
+    LaTeX --> PDF[📕 PDF Output]
+    LaTeX --> Overleaf[☁️ Overleaf Sync]
+    Overleaf --> Collab[👥 Collaborative Editing]
+    Collab --> GitHub[📦 GitHub Archive]
+    GitHub --> Done([✅ Published])
+
+    style Jupyter fill:#f9f,stroke:#333,stroke-width:2px
+    style LaTeX fill:#bbf,stroke:#333,stroke-width:2px
+    style Overleaf fill:#bfb,stroke:#333,stroke-width:2px
 ```
 
 ## Features
 
-- Automated notebook → LaTeX conversion with proper academic formatting
-- Integration with Overleaf MCP for seamless sync
-- GitHub Actions for continuous paper building
-- Template compliance (Acta Acustica, IEEE, etc.)
-- Equation extraction with physical/perceptual interpretations
-- Figure conversion (matplotlib → TikZ where possible)
-- Citation management from notebook to BibTeX
-- Reproducible research with frozen environments
-
-## Quick Start
-
-### 1. Start JupyterLab
-
-```bash
-# From mcp-pipeline directory
-bash up-min.sh
-
-# Access JupyterLab
-open http://localhost:8888
-```
-
-### 2. Create Research Notebook
-
-Open the template notebook: `notebooks/academic_paper_template.ipynb`
-
-### 3. Run Conversion
-
-```python
-from workflow import notebook_to_paper
-
-# Convert notebook to LaTeX
-notebook_to_paper(
-    notebook="my_research.ipynb",
-    output_dir="shared/docs/my_paper",
-    template="acta_acustica"
-)
-```
-
-### 4. Sync to Overleaf
-
-```python
-from workflow import sync_to_overleaf
-
-# Upload to Overleaf
-sync_to_overleaf(
-    latex_dir="shared/docs/my_paper",
-    project_name="default"
-)
-```
-
-### 5. Commit to GitHub
-
-```bash
-cd shared/docs/my_paper
-git add .
-git commit -m "Add paper: My Research Title"
-git push origin main
-```
+- ✅ **Notebook to LaTeX** - Automatic conversion with academic formatting
+- ✅ **Multiple Templates** - Article, IEEE, two-column, thesis
+- ✅ **Overleaf Sync** - Collaborate with advisors and co-authors
+- ✅ **GitHub Integration** - Version control and reproducibility
+- ✅ **Figure Extraction** - Automatic figure handling
+- ✅ **Citation Management** - BibTeX generation
+- ✅ **Free for Education** - CC BY-NC-SA 4.0 license
 
 ## Installation
 
-### Prerequisites
+### Standalone (Simple)
 
-- MCP Pipeline running (see main README)
-- Overleaf account with Git token
-- GitHub account
-
-### Setup
-
-1. Configure Overleaf credentials:
 ```bash
-# Edit overleaf-mcp/projects.json
-{
-  "projects": {
-    "default": {
-      "name": "My Research Paper",
-      "projectId": "YOUR_OVERLEAF_PROJECT_ID",
-      "gitToken": "YOUR_OVERLEAF_GIT_TOKEN"
-    }
-  }
-}
+pip install -e .
 ```
 
-2. Rebuild Overleaf MCP:
-```bash
-docker compose build overleaf-mcp
-docker compose up -d overleaf-mcp
-```
+Requirements:
+- Python 3.8+
+- Jupyter/JupyterLab
+- LaTeX (TeX Live, MiKTeX, or MacTeX)
 
-3. Install workflow package in JupyterLab:
-```bash
-docker exec -it mcp-jupyter pip install -e /home/jovyan/shared/workflow
-```
+### With MCP Pipeline (Advanced)
 
-## Usage Guide
+For automated Overleaf sync, use with the [MCP Pipeline](https://github.com/Ziforge/mcp-pipeline).
 
-### Notebook Structure
+## Usage
 
-Organize your research notebook with these sections:
+### 1. Create Notebook
+
+Structure your notebook like this:
 
 ```python
-# Cell 1: Title and Metadata
+# Cell 1: Metadata
 """
-# Paper Title: Your Research Title Here
+# Paper Title: Your Research Title
 
 **Authors:** Your Name
 **Institution:** Your University
-**Contact:** your.email@university.edu
-**Keywords:** keyword1, keyword2, keyword3
-**Template:** your_template_choice
+**Keywords:** research, paper, jupyter
+**Template:** twocolumn
 """
 
 # Cell 2: Abstract
 """
-ABSTRACT: Your 200-word abstract here...
+## Abstract
+Your abstract here...
 """
 
-# Cell 3-5: Introduction
-"""
-## Introduction
-
-Background and motivation...
-"""
-
-# Code cells: Implementation
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Cell N: Results
-"""
-## Results
-
-Discussion of findings...
-"""
-
-# Cell N+1: Conclusion
-"""
-## Conclusion
-
-Summary and future work...
-"""
+# Cell 3+: Content with code and analysis
 ```
 
-### Conversion Options
+### 2. Convert to LaTeX
 
 ```python
-notebook_to_paper(
-    notebook="research.ipynb",
-    output_dir="shared/docs/paper",
+from workflow import notebook_to_paper
 
-    # Template selection
-    template="acta_acustica",  # or "ieee", "aes", "custom"
-
-    # Figure handling
-    save_figures=True,
-    convert_to_tikz=False,  # Set True for simple plots
-    figure_format="pdf",
-
-    # Citation processing
-    extract_citations=True,
-    bibtex_file="references.bib",
-
-    # Code inclusion
-    include_code=False,  # Exclude code from paper
-    code_appendix=True,  # Add code to appendix
-
-    # Equation formatting
-    extract_equations=True,
-    add_interpretations=True,  # Add physical/perceptual notes
+result = notebook_to_paper(
+    notebook="my_paper.ipynb",
+    output_dir="paper",
+    template="twocolumn",
+    include_code=False
 )
 ```
 
-### Overleaf Sync
+### 3. Compile PDF
+
+```bash
+cd paper
+pdflatex main.tex
+bibtex main
+pdflatex main.tex
+pdflatex main.tex
+```
+
+### 4. Sync to Overleaf
+
+**Manual:**
+```bash
+git clone https://git:TOKEN@git.overleaf.com/PROJECT_ID
+cp paper/* overleaf-project/
+cd overleaf-project && git add . && git commit -m "Update" && git push
+```
+
+**Automated (with MCP):**
+```python
+from workflow import sync_to_overleaf
+
+sync_to_overleaf(latex_dir="paper", project_name="default")
+```
+
+### 5. Push to GitHub
 
 ```python
-from workflow import sync_to_overleaf, pull_from_overleaf
+from workflow import push_to_github
 
-# Upload local changes to Overleaf
-sync_to_overleaf(
-    latex_dir="shared/docs/paper",
-    project_name="default",
-    commit_message="Update results section"
+push_to_github(
+    local_dir="paper",
+    repo_name="username/my-paper",
+    commit_message="Add paper draft"
 )
-
-# Pull Overleaf changes back
-pull_from_overleaf(
-    project_name="default",
-    output_dir="shared/docs/paper",
-    files=["main.tex", "references.bib"]
-)
 ```
 
-### GitHub Integration
+## Available Templates
 
-Create `.github/workflows/build-paper.yml`:
+- `article` - Single column
+- `twocolumn` - Conference format
+- `ieee` - IEEE style
+- `acta_acustica` - Acta Acustica journal
+- `thesis` - Dissertation format
 
-```yaml
-name: Build LaTeX Paper
+## Notebook Structure
 
-on:
-  push:
-    paths:
-      - 'paper/**'
-  pull_request:
+```mermaid
+graph TD
+    Notebook[📓 Jupyter Notebook] --> Meta[📋 Metadata]
+    Notebook --> Abstract[📝 Abstract]
+    Notebook --> Intro[🎯 Introduction]
+    Notebook --> Methods[🔬 Methods & Code]
+    Notebook --> Results[📊 Results]
+    Notebook --> Discuss[💭 Discussion]
+    Notebook --> Conclude[✅ Conclusion]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+    Methods --> Code[💻 Python Code]
+    Methods --> Figures[📈 Figures]
+    Results --> Data[📉 Data Display]
 
-      - name: Compile LaTeX
-        uses: xu-cheng/latex-action@v2
-        with:
-          root_file: paper/main.tex
-
-      - name: Upload PDF
-        uses: actions/upload-artifact@v3
-        with:
-          name: paper-pdf
-          path: paper/main.pdf
+    style Notebook fill:#f9f,stroke:#333,stroke-width:2px
+    style Code fill:#dff,stroke:#333
+    style Figures fill:#dfd,stroke:#333
 ```
 
-## Templates
-
-### Acta Acustica Template
-
-Features:
-- Two-column format
-- Physical and perceptual equation interpretations
-- TikZ diagrams
-- Comprehensive bibliography
-- Symbol tables with units
-
-Location: `templates/acta_acustica/`
-
-### IEEE Template
-
-Features:
-- IEEE conference/journal format
-- Standard figure/table formatting
-- IEEE citation style
-
-Location: `templates/ieee/`
-
-## Examples
-
-### Example 1: Data Analysis
-
-See `examples/data_analysis.ipynb` for:
-- Statistical analysis
-- Figure generation
-- Results documentation
-- Complete LaTeX paper output
-
-### Example 2: Mathematical Study
-
-See `examples/mathematical_proof.ipynb` for:
-- Equation derivation
-- Theorem proofs
-- Visualization
-- Publication-ready formatting
-
-## Best Practices
-
-### 1. Reproducibility
-
-```python
-# Always include at top of notebook
-import numpy as np
-np.random.seed(42)  # Fixed seed
-
-# Document versions
-import sys
-print(f"Python: {sys.version}")
-print(f"NumPy: {np.__version__}")
-print(f"Date: {datetime.now()}")
-```
-
-### 2. Figure Quality
-
-```python
-# High-resolution figures
-plt.figure(figsize=(6, 4), dpi=300)
-plt.plot(data)
-plt.xlabel("Time (ms)")
-plt.ylabel("Amplitude")
-plt.savefig("figure.pdf", bbox_inches='tight')
-```
-
-### 3. Equation Documentation
-
-```python
-"""
-The interaural time difference is computed as:
-
-$$\Delta t(\varphi) = \frac{a}{c}(\varphi + \sin\varphi)$$
-
-**Physical interpretation:** Path-length difference around spherical head
-of radius $a$, where arc term accounts for diffraction.
-
-**Perceptual interpretation:** 10 μs ≈ 1° azimuth discrimination at
-frontal positions for frequencies below 1.5 kHz.
-"""
-```
-
-### 4. Citations
-
-```python
-# In notebook markdown:
-"""
-Recent studies [1], [2] demonstrate real-time HRTF interpolation.
-
-References:
-[1] Brown, C. P., & Duda, R. O. (1998). A structural model for binaural sound synthesis.
-[2] ...
-"""
-```
-
-## Workflow API Reference
-
-### Core Functions
+## API Reference
 
 ```python
 # Conversion
-notebook_to_paper(notebook, output_dir, **options)
-extract_figures(notebook, output_dir, format='pdf')
-extract_equations(notebook, add_interpretations=True)
-extract_citations(notebook, bibtex_file)
+from workflow import notebook_to_paper
 
-# Overleaf sync
-sync_to_overleaf(latex_dir, project_name, message)
-pull_from_overleaf(project_name, output_dir, files)
-list_overleaf_projects()
-get_overleaf_status(project_name)
+notebook_to_paper(
+    notebook="file.ipynb",
+    output_dir="output",
+    template="twocolumn",      # Template choice
+    save_figures=True,          # Save figures
+    figure_format="pdf",        # Figure format
+    include_code=False          # Exclude code
+)
 
-# GitHub integration
-create_github_repo(name, description, private=True)
-push_to_github(local_dir, repo_name, message)
-create_release(repo_name, version, notes)
+# Overleaf
+from workflow import sync_to_overleaf, pull_from_overleaf
 
-# Utilities
-validate_latex(tex_file)
-compile_latex(tex_file, output_dir)
-check_citations(tex_file, bib_file)
+sync_to_overleaf(latex_dir="paper", project_name="default")
+pull_from_overleaf(project_name="default", output_dir="paper")
+
+# GitHub
+from workflow import push_to_github, create_github_repo
+
+push_to_github(local_dir="paper", repo_name="user/repo", commit_message="Update")
+create_github_repo(name="my-paper", description="Research paper", private=True)
 ```
+
+## Examples
+
+See `examples/simple_paper.ipynb` for a complete working example showing:
+- Proper notebook structure
+- Code and analysis
+- Figure generation
+- Conversion to LaTeX
+- Overleaf sync instructions
+
+## LaTeX Installation
+
+**macOS:**
+```bash
+brew install --cask mactex
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install texlive-full
+```
+
+**Windows:**
+Download [MiKTeX](https://miktex.org/)
 
 ## Troubleshooting
 
-### Conversion Issues
+**Conversion fails:**
+- Ensure metadata in first cell
+- Check all code cells run
+- Save figures with `plt.savefig()`
 
-**Problem:** Figures not appearing in LaTeX
-```python
-# Solution: Explicitly save figures
-plt.savefig("figure1.pdf", bbox_inches='tight')
+**LaTeX errors:**
+- Install missing packages: `tlmgr install PACKAGE`
+- Check LaTeX path: `which pdflatex`
+
+**Overleaf sync issues:**
+- Verify Git token in Overleaf settings
+- Check project ID in URL
+- Ensure write access
+
+## Project Structure
+
 ```
-
-**Problem:** Equations not formatted correctly
-```python
-# Solution: Use raw LaTeX in markdown cells
-r"$$E = mc^2$$"
-```
-
-### Overleaf Sync Issues
-
-**Problem:** Authentication failed
-```bash
-# Check token in projects.json
-# Regenerate token in Overleaf settings
-```
-
-**Problem:** Merge conflicts
-```python
-# Pull before pushing
-pull_from_overleaf(project_name, output_dir)
-# Resolve conflicts
-sync_to_overleaf(latex_dir, project_name)
-```
-
-### GitHub Issues
-
-**Problem:** Large files rejected
-```bash
-# Use Git LFS for data files
-git lfs track "*.wav"
-git lfs track "*.mat"
-```
-
-## Advanced Usage
-
-### Custom Templates
-
-Create your own template:
-
-```python
-from workflow import Template
-
-template = Template(
-    name="custom",
-    documentclass="article",
-    packages=["amsmath", "tikz", "biblatex"],
-    preamble=r"\usepackage{custom}",
-    layout="twocolumn"
-)
-
-notebook_to_paper(
-    notebook="research.ipynb",
-    template=template
-)
-```
-
-### Automated Pipeline
-
-```python
-# Complete workflow script
-from workflow import Pipeline
-
-pipeline = Pipeline(
-    notebook="research.ipynb",
-    overleaf_project="default",
-    github_repo="username/paper-repo"
-)
-
-# Run complete workflow
-pipeline.run(
-    convert=True,
-    compile=True,
-    sync_overleaf=True,
-    push_github=True,
-    create_release="v1.0.0"
-)
-```
-
-## Citation
-
-If you use this workflow in your research, please cite:
-
-```bibtex
-@software{jupyter_overleaf_workflow,
-  title = {Jupyter to Overleaf Workflow for Academic Writing},
-  year = {2025},
-  publisher = {GitHub},
-  url = {https://github.com/YOUR_USERNAME/jupyter-overleaf-workflow}
-}
+jupyter-overleaf-workflow/
+├── README.md              # This file
+├── LICENSE                # CC BY-NC-SA 4.0
+├── setup.py               # Package installation
+├── requirements.txt       # Dependencies
+├── workflow/              # Core package
+│   ├── converter.py       # Notebook → LaTeX
+│   ├── overleaf.py        # Overleaf integration
+│   ├── github.py          # GitHub automation
+│   └── templates.py       # LaTeX templates
+└── examples/
+    └── simple_paper.ipynb # Working example
 ```
 
 ## License
 
-Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International**
 
-This work is free for educational and research use. Commercial use requires permission.
+- ✅ Free for educational and research use
+- ✅ Share and adapt freely
+- ✅ Must credit original work
+- ❌ No commercial use without permission
 
-See LICENSE file for full terms.
+[Full License Text](LICENSE)
+
+## Citation
+
+If you use this workflow in your research:
+
+```bibtex
+@software{jupyter_overleaf_workflow,
+  title = {Jupyter-Overleaf Workflow for Academic Writing},
+  year = {2025},
+  publisher = {GitHub},
+  url = {https://github.com/Ziforge/jupyter-overleaf-workflow}
+}
+```
+
+## Contributing
+
+Contributions welcome! Please:
+- Report issues on GitHub
+- Submit pull requests
+- Share your templates
+- Improve documentation
+
+## Documentation
+
+- 📖 **Quick Start:** [docs/QUICKSTART.md](docs/QUICKSTART.md) - Get started in 5 minutes
+- 🔧 **Standalone Install:** [docs/STANDALONE_INSTALL.md](docs/STANDALONE_INSTALL.md) - Install without MCP
+- 📊 **Diagrams:** [docs/DIAGRAMS.md](docs/DIAGRAMS.md) - Visual workflow diagrams
+
+## Support
+
+- 🐛 **Issues:** [GitHub Issues](https://github.com/Ziforge/jupyter-overleaf-workflow/issues)
+- 💬 **Discussions:** [GitHub Discussions](https://github.com/Ziforge/jupyter-overleaf-workflow/discussions)
+- 📖 **Examples:** See `examples/` directory
 
 ## Acknowledgments
 
 This work was developed with assistance from Claude (Anthropic).
 
-## Support
-
-- Issues: GitHub Issues
-- Documentation: This README
-- Examples: `examples/` directory
-
 ---
 
-**For Students and Researchers**
-A tool to streamline academic writing from computational notebooks to published papers.
+**Made for students and researchers worldwide** 🌍📚
+
+Version 1.0.0

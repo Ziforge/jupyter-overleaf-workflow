@@ -30,9 +30,9 @@ flowchart TB
     Collab --> GitHub[📦 GitHub Archive]
     GitHub --> Done([✅ Published])
 
-    style Jupyter fill:#f9f,stroke:#333,stroke-width:2px
-    style LaTeX fill:#bbf,stroke:#333,stroke-width:2px
-    style Overleaf fill:#bfb,stroke:#333,stroke-width:2px
+    style Jupyter stroke:#f0f,stroke-width:3px
+    style LaTeX stroke:#00f,stroke-width:3px
+    style Overleaf stroke:#0f0,stroke-width:3px
 ```
 
 ## Features
@@ -163,9 +163,9 @@ graph TD
     Methods --> Figures[📈 Figures]
     Results --> Data[📉 Data Display]
 
-    style Notebook fill:#f9f,stroke:#333,stroke-width:2px
-    style Code fill:#dff,stroke:#333
-    style Figures fill:#dfd,stroke:#333
+    style Notebook stroke:#f0f,stroke-width:3px
+    style Code stroke:#00f,stroke-width:2px
+    style Figures stroke:#0f0,stroke-width:2px
 ```
 
 ## API Reference

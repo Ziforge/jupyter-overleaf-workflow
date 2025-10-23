@@ -34,10 +34,10 @@ flowchart TB
     Repo --> Archive[Archived & Reproducible]
     Archive --> Done
 
-    style Jupyter fill:#f9f,stroke:#333,stroke-width:2px
-    style LaTeX fill:#bbf,stroke:#333,stroke-width:2px
-    style Overleaf fill:#bfb,stroke:#333,stroke-width:2px
-    style GitHub fill:#fbb,stroke:#333,stroke-width:2px
+    style Jupyter stroke:#f0f,stroke-width:3px
+    style LaTeX stroke:#00f,stroke-width:3px
+    style Overleaf stroke:#0f0,stroke-width:3px
+    style GitHub stroke:#f00,stroke-width:3px
 ```
 
 ## Notebook Structure
@@ -58,10 +58,10 @@ graph TD
     Methods --> |Plots| Figures[Figure Generation]
     Results --> |Output| Data[Data Display]
 
-    style Notebook fill:#f9f,stroke:#333,stroke-width:2px
-    style Meta fill:#ffd,stroke:#333
-    style Methods fill:#dff,stroke:#333
-    style Figures fill:#dfd,stroke:#333
+    style Notebook stroke:#f0f,stroke-width:3px
+    style Meta stroke:#ff0,stroke-width:2px
+    style Methods stroke:#0ff,stroke-width:2px
+    style Figures stroke:#0f0,stroke-width:2px
 ```
 
 ## Conversion Process
@@ -134,9 +134,9 @@ flowchart LR
     Advisor --> |Final Approval| Final[Final Version]
     CoAuthor --> Final
 
-    style Notebook fill:#f9f,stroke:#333,stroke-width:2px
-    style OLEditor fill:#bfb,stroke:#333,stroke-width:2px
-    style Final fill:#ffd,stroke:#333,stroke-width:2px
+    style Notebook stroke:#f0f,stroke-width:3px
+    style OLEditor stroke:#0f0,stroke-width:3px
+    style Final stroke:#ff0,stroke-width:3px
 ```
 
 ## GitHub Workflow
@@ -188,8 +188,8 @@ graph LR
     Thesis --> Format
     Article --> Format
 
-    style Start fill:#ffd,stroke:#333,stroke-width:2px
-    style Format fill:#bfb,stroke:#333,stroke-width:2px
+    style Start stroke:#ff0,stroke-width:3px
+    style Format stroke:#0f0,stroke-width:3px
 ```
 
 ## Data Flow
@@ -244,10 +244,10 @@ graph TB
 
     PDF --> Journal
 
-    style Research fill:#fdd,stroke:#333
-    style Notebook fill:#dfd,stroke:#333
-    style Output fill:#ddf,stroke:#333
-    style Distribution fill:#ffd,stroke:#333
+    style Research stroke:#f00,stroke-width:2px
+    style Notebook stroke:#0f0,stroke-width:2px
+    style Output stroke:#00f,stroke-width:2px
+    style Distribution stroke:#ff0,stroke-width:2px
 ```
 
 ## Component Architecture
@@ -288,9 +288,9 @@ graph TD
 
     Converter --> LaTeXComp
 
-    style API fill:#f9f,stroke:#333,stroke-width:2px
-    style Converter fill:#bbf,stroke:#333,stroke-width:2px
-    style OLMCP fill:#bfb,stroke:#333,stroke-width:2px
+    style API stroke:#f0f,stroke-width:3px
+    style Converter stroke:#00f,stroke-width:3px
+    style OLMCP stroke:#0f0,stroke-width:3px
 ```
 
 ## User Journey
@@ -342,8 +342,8 @@ graph TD
     Done1 --> Manual[Manual Overleaf Sync]
     Done2 --> Auto[Automated Overleaf Sync]
 
-    style Standalone fill:#bfb,stroke:#333,stroke-width:2px
-    style MCP fill:#bbf,stroke:#333,stroke-width:2px
+    style Standalone stroke:#0f0,stroke-width:3px
+    style MCP stroke:#00f,stroke-width:3px
 ```
 
 ---

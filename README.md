@@ -60,7 +60,17 @@ Requirements:
 
 ### With MCP Pipeline (Advanced)
 
-For automated Overleaf sync, use with the [MCP Pipeline](https://github.com/Ziforge/mcp-pipeline).
+For automated features, use with the [MCP Pipeline](https://github.com/Ziforge/mcp-pipeline):
+
+- **Automated Overleaf sync** via overleaf-mcp (port 7105)
+- **LaTeX compilation service** via docs-mcp (port 7070)
+- **Integrated workflow** with other MCP tools
+
+Start MCP services:
+```bash
+cd /path/to/mcp-pipeline
+bash up-min.sh  # Starts docs-mcp and other core services
+```
 
 **Note for AI Agents:** This workflow is designed to work with AI coding assistants (like Claude Code, Cursor, etc.). You'll need to create your own skills/rules configuration for your specific agent to integrate this workflow into your development environment.
 
@@ -105,12 +115,24 @@ result = notebook_to_paper(
 
 ### 3. Compile PDF
 
+**Local:**
 ```bash
 cd paper
 pdflatex main.tex
 bibtex main
 pdflatex main.tex
 pdflatex main.tex
+```
+
+**Or using Python:**
+```python
+from workflow import compile_latex
+
+# Compile locally
+result = compile_latex("paper/main.tex")
+
+# Or use docs-mcp service (if MCP Pipeline running)
+result = compile_latex("paper/main.tex", use_mcp=True)
 ```
 
 ### 4. Sync to Overleaf
@@ -184,6 +206,18 @@ notebook_to_paper(
     figure_format="pdf",        # Figure format
     include_code=False          # Exclude code
 )
+
+# LaTeX Compilation
+from workflow import compile_latex, check_latex_installation
+
+# Check if LaTeX installed
+check_latex_installation()
+
+# Compile locally
+compile_latex("paper/main.tex")
+
+# Or use docs-mcp service (requires MCP Pipeline)
+compile_latex("paper/main.tex", use_mcp=True, mcp_url="http://localhost:7070")
 
 # Overleaf
 from workflow import sync_to_overleaf, pull_from_overleaf

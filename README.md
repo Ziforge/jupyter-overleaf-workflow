@@ -3,7 +3,16 @@
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
-Convert Jupyter notebooks to academic LaTeX papers with Overleaf and GitHub integration. Perfect for students and researchers.
+**A complete academic writing workflow for students and researchers.**
+
+This tool helps you:
+- 📓 Write research code in **Jupyter notebooks** (Python)
+- 📄 Automatically convert to **LaTeX** with proper academic formatting
+- 🔨 **Compile LaTeX to PDF** (locally or via docs-mcp service)
+- ☁️ Sync to **Overleaf** for collaborative editing with advisors
+- 📦 Archive on **GitHub** with full reproducibility
+
+**One workflow:** Jupyter → LaTeX → PDF → Overleaf → GitHub
 
 ## Quick Start
 

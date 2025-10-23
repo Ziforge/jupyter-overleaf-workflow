@@ -62,6 +62,8 @@ Requirements:
 
 For automated Overleaf sync, use with the [MCP Pipeline](https://github.com/Ziforge/mcp-pipeline).
 
+**Note for AI Agents:** This workflow is designed to work with AI coding assistants (like Claude Code, Cursor, etc.). You'll need to create your own skills/rules configuration for your specific agent to integrate this workflow into your development environment.
+
 ## Usage
 
 ### 1. Create Notebook
